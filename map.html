@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+    <div id="googleMap" style="width:100%;height:380px;"></div>
+    <form action="" method="post">
+        <input type="text" id="lat" name="lat" value="">
+        <input type="text" id="lng" name="lng" value="">
+    </form>
+</body>
+<script>
+    var marker;
+
+    function markers(map, position) {
+        if (marker) {
+            marker.setPosition(position);
+        } else {
+            marker = new google.maps.Marker({
+                position: position,
+                map: map
+            });
+        }
+        document.getElementById("lat").value = position.lat();
+        document.getElementById("lng").value = position.lng();
+    }
+    
+    function initialize() {
+        var maps = {
+            center: new google.maps.LatLng(-1.2406005923640022, 116.85659843795167),
+            zoom: 12.8,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        
+        var map = new google.maps.Map(document.getElementById("googleMap"), maps);
+        
+        google.maps.event.addListener(map, 'click', function(event) {
+            markers(this, event.latLng);
+        });
+    }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?callback=initialize"></script>
+</html>
